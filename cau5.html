@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="list-1">
+
+        <li>1</li>
+
+        <li>2</li>
+
+        <li>3</li>
+
+        <li>4</li>
+
+        <li>5</li>
+
+        <li>6</li>
+
+        <li>7</li>
+
+        <li>10</li>
+
+    </ul>
+
+    <ul id="list-2">
+
+        <li>3</li>
+
+        <li>4</li>
+
+        <li>5</li>
+
+        <li>8</li>
+
+        <li>9</li>
+
+        <li>10</li>
+
+        <li>12</li>
+
+    </ul>
+
+    <ul id="list-3">
+
+    </ul>
+
+    <button>Copy</button>
+
+    <script>
+        const ulNode_1 = document.getElementById("list-1");
+        const ulNode_2 = document.getElementById("list-2");
+        const ulNode_3 = document.getElementById("list-3");
+        const list_1 = ulNode_1.querySelectorAll("li");
+        const list_2 = ulNode_2.querySelectorAll("li");
+        const arr1 = Array.from(list_1);
+        const arr2 = Array.from(list_2);
+        const copyBtn = document.querySelector("button");
+        const arr_3 = arr1.filter((item1) => {
+            return arr2.some((item2) => item1.textContent == item2.textContent);
+        });
+        
+        console.log(arr_3);
+        copyBtn.addEventListener("click", (event) => {
+            arr_3.forEach((item) => ulNode_3.appendChild(item.cloneNode(true)));
+        });
+        
+    </script>
+</body>
+
+</html>

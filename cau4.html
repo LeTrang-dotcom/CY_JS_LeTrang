@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="list-1">
+        <li>1</li>
+
+        <li>2</li>
+
+        <li>3</li>
+
+        <li>4</li>
+
+        <li>5</li>
+    </ul>
+    <ul id="list-2">
+
+    </ul>
+
+    <button>Copy</button>
+</body>
+<script>
+    const ulNode_1 = document.getElementById("list-1");
+    const ulNode_2 = document.getElementById("list-2");
+    const CopyBtn = document.querySelector("button");
+
+    CopyBtn.addEventListener("click", (event) => {
+        const list = ulNode_1.querySelectorAll("li");
+        list.forEach((item) => {
+            ulNode_2.append(item.cloneNode(true));
+        })
+    })
+</script>
+
+</html>

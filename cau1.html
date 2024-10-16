@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu 1</title>
+</head>
+
+<body>
+    <ul id="list">
+        <li>1</li>
+        <li>2</li>
+    </ul>
+    <button>Add</button>
+
+    <script>
+        const ulNode = document.getElementById("list");
+        const addNode = document.querySelector("button");
+        let newValue = ulNode.children.length + 1;
+
+        addNode.addEventListener("click", (event) => {
+            const newNode = document.createElement("li");
+            newNode.textContent = newValue;
+            ulNode.append(newNode);
+            newValue++;
+        })
+    </script>
+</body>
+
+</html>
