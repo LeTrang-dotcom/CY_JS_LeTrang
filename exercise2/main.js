@@ -108,19 +108,17 @@ const scoreNode = document.querySelector(".score");
 const btnNode = document.querySelector("button");
 const wrapperNode = document.querySelector(".wrapper");
 
+let index = 0;
+let total_score = 0;
+
 function active(index) {
     questionNode.innerHTML = questions[index].content;
-    let str = "";
-    questions[index].answers.forEach((answer) => {
-        str +=
-            `
-            <div class="answer" onclick="select(this)">${answer}</div>
-        `;
-    })
-    answersNode.innerHTML = str;
+    answersNode.innerHTML = questions[index].answers.map((item) => `
+        <div class="answer" onclick="select(this)">${item}</div>
+    `).join('');
 }
 
-let total_score = 0;
+
 function select(element) {
     const correctAnswer = questions[index].answers[questions[index].correctAnswer];
 
@@ -142,7 +140,7 @@ function select(element) {
     })
 }
 
-let index = 0;
+
 active(index);
 btnNode.addEventListener("click", (event) => {
     if (index < questions.length - 1) {

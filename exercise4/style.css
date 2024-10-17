@@ -1,0 +1,33 @@
+.group {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.circle {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: blue;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    margin-right: 10px;
+}
+
+.dotted-input {
+    display: inline-block;
+    width: fit-content;
+    width: 100px;
+    border: none;
+    border-bottom: 1px dotted #000;
+}
+.correct{
+    background: green;
+}
+.incorrect{
+    background: red;
+}
+.dotted-input:focus {
+    outline: none;
+}

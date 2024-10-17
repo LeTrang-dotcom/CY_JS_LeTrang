@@ -33,82 +33,89 @@ const nextBtn = document.querySelector("button");
 const wrapper = document.querySelector(".wrapper");
 const countdown = document.querySelector(".countdown");
 
-let time = 2;
+
 let index = 0;
 let flip = 0;
-function seeSuggestion(element){
-    if (flip <= questions[index].maxShowingCharacter - 1){
+let arr = [];
+function seeSuggestion(element) {
+    if (flip < questions[index].maxShowingCharacter) {
         const item = element.getAttribute("data-item");
         element.innerHTML = item;
         flip++;
+        numberOfFlip();
     }
 }
-console.log(flip);
-function render(){
-    console.log(flip);
-    notification.innerHTML = `<p>Bạn được quyền lật ${questions[0].maxShowingCharacter} ô</p>`;
-    let strQuestion = "";
-    strQuestion += 
-        `
-            <p>${questions[0].content}</p>
-        `;
-    strQuestion += 
-        `
-            <div>
-                <img src="${questions[0].image}" alt="">
-            </div>
-        `;
-    question.innerHTML += strQuestion;
 
-    let strAnswer = "";
-
-    const arr = [...questions[0].correctAnswer.replace(/\s+/g, '')];
-    arr.forEach((item) => {
-        strAnswer += 
-            `
-                <div class="div-result" data-item="${item}" onclick="seeSuggestion(this)"></div>
-            `;
-    });
-
-    answer.innerHTML = strAnswer;
-
-    nextBtn.addEventListener("click", (event) => {
-        if(input.value == questions[0].correctAnswer){
-            alert("Bạn đã trả lời đúng");
-            strAnswer = "";
-            arr.forEach((item) => {
-                strAnswer +=
-                    `
-                <div class="div-result" data-item="${item}" onclick="seeSuggestion(this)>${item}</div>
-            `;
-            });
-            answer.innerHTML = strAnswer;
-
-            setInterval(() => {
-                time--;
-                countdown.innerHTML = `<small>Bạn sẽ được chuyển sang câu tiếp theo trong ${time} giây</small>`;
-
-                if (time <= 0) {
-                    clearInterval();
-                }
-            }, 1000);
-            setTimeout(() => {
-                next();
-            }, time * 1000);
-        }else{
-            alert("Bạn đã trả lời sai");
-        }
-    })
+function numberOfFlip() {
+    notification.innerHTML = `<p>Bạn được quyền lật ${questions[index].maxShowingCharacter - flip} ô</p>`;
 }
 
+function prepareAnswer(){
+    let trimCorrectAnswer = questions[index].correctAnswer.replace(/\s+/g, '');
+    arr = [...trimCorrectAnswer];
+}
+
+function render() {
+    prepareAnswer();
+    numberOfFlip();
+    question.innerHTML = `
+        <p>${questions[index].content}</p>
+        <div>
+            <img src="${questions[index].image}" alt="">
+        </div>
+    `;
+
+    let strAnswer = arr.map((item) => `
+        <div class="div-result" data-item="${item}" onclick="seeSuggestion(this)"></div>
+    `).join("");
+
+    answer.innerHTML = strAnswer;
+    input.value = "";   
+}
+function displayCorrectAnswer(){
+    let strAnswer = arr.map((item) => `
+        <div class="div-result" data-item="${item}">${item}</div>
+    `).join('');
+    answer.innerHTML = strAnswer;
+}
+function startCountDown(time){
+    const countdownInterval = setInterval(() => {
+        time--;
+        countdown.innerHTML = `<small>Bạn sẽ được chuyển sang câu tiếp theo trong ${time} giây</small>`;
+
+        if (time == 0) {
+            clearInterval(countdownInterval);
+            countdown.innerHTML = "";
+        }
+    }, 1000);
+}
+
+nextBtn.addEventListener("click", (event) => {
+    const timeLimit = 2;
+    let time = timeLimit;
+    if (input.value == questions[index].correctAnswer) {
+        alert("Bạn đã trả lời đúng");
+        
+        displayCorrectAnswer();
+
+        startCountDown(time);
+        
+        setTimeout(() => {
+            next();
+        }, 2000);
+    } else {
+        alert("Bạn đã trả lời sai");
+    }
+})
 
 render();
 
-function next(){
-    index ++;
-    if(index < questions.length){
+function next() {
+    index++;
+    if (index < questions.length) {
+        flip = 0;
         render();
-    }else{
+    } else {
         wrapper.innerHTML = "";
         const str =
             `
