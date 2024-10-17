@@ -10,7 +10,6 @@ function filterStr(){
     const arrKeyAnswer = arr.filter((item) => item.match(/{{(.*?)}}/))
         .map((item) => item.replace(/{{(.*?)}}/, '$1'));
     
-    console.log(arrKeyAnswer);
     return arrKeyAnswer;
 }
 
