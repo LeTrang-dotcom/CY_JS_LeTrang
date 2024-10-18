@@ -95,7 +95,6 @@ nextBtn.addEventListener("click", (event) => {
     let time = timeLimit;
     if (input.value == questions[index].correctAnswer) {
         alert("Bạn đã trả lời đúng");
-        
         displayCorrectAnswer();
 
         startCountDown(time);
@@ -105,6 +104,12 @@ nextBtn.addEventListener("click", (event) => {
         }, 2000);
     } else {
         alert("Bạn đã trả lời sai");
+        wrapper.innerHTML = "";
+        const str =
+            `
+            <h1 style="text-align: center"> Kết thúc câu hỏi<h1>
+        `;
+        wrapper.innerHTML += str;
     }
 })
 
@@ -113,6 +118,7 @@ render();
 function next() {
     index++;
     if (index < questions.length) {
+        let corrects = 0;
         flip = 0;
         render();
     } else {
